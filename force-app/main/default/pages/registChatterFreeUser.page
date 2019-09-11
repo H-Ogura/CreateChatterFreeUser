@@ -1,0 +1,10 @@
+<apex:page>
+    <apex:includeLightning />
+    <div id="regForm"></div>
+   
+    <script>
+        $Lightning.use("c:auraregistApp", function() {
+            $Lightning.createComponent("c:auraregistForm", {}, "regForm", function(cmp, err) {}); 
+        });
+    </script>
+</apex:page>
