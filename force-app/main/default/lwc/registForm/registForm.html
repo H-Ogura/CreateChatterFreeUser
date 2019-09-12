@@ -8,14 +8,24 @@
             <lightning-input-field field-name='Email' onchange={handleEmailChange}></lightning-input-field>
             <lightning-input-field field-name='Alias' value={ailas}></lightning-input-field>
             <lightning-input-field field-name='ProfileId' ></lightning-input-field>
-            <lightning-input-field field-name='EmailEncodingKey' value="ISO-2022-JP" disabled></lightning-input-field>            
-            <lightning-input-field field-name='LanguageLocaleKey' disabled value="ja"></lightning-input-field>
             <lightning-input-field field-name='LocaleSidKey' disabled value="ja_JP"></lightning-input-field>
             <lightning-input-field field-name='TimeZoneSidKey' disabled value="Asia/Tokyo"></lightning-input-field>
+            <lightning-input-field field-name='LanguageLocaleKey' disabled value="ja"></lightning-input-field>
+            <lightning-input-field field-name='EmailEncodingKey' value="ISO-2022-JP" disabled></lightning-input-field>            
+            
             <div class="slds-m-top_medium">
                 <center>
                     <lightning-button variant="brand" type="submit" name="save" icon-name="utility:adduser" label="ユーザー登録">
                     </lightning-button>
+                    &nbsp;&nbsp;&nbsp;
+                    <template if:true={canreset}>
+                        <lightning-button variant="success" icon-name="utility:reset_password" onclick={navigateToWebPage} label="パスワードをリセット">
+                        </lightning-button>
+                    </template>
+                    <template if:false={canreset}>
+                        <lightning-button variant="success" icon-name="utility:reset_password" disabled label="パスワードをリセット">
+                        </lightning-button>
+                    </template>
                 </center>
            </div>
        </div>
