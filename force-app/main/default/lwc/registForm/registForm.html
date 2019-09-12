@@ -1,12 +1,22 @@
 <template>
-    <lightning-record-edit-form object-api-name="Account" onsuccess={handleSuccess}>
+    <lightning-record-edit-form object-api-name="User" onsuccess={handleSuccess}>
         <lightning-messages></lightning-messages>
-        <div class="slds-m-around_medium">
-            <lightning-input-field field-name='Id' value={accountId}></lightning-input-field>
-            <lightning-input-field field-name='Name'></lightning-input-field>
+        <div class="slds-box slds-m-around_medium">
+            <lightning-input-field field-name='Id' value={userId}></lightning-input-field>
+            <lightning-input-field field-name='Username' value={username} disabled></lightning-input-field>
+            <lightning-input-field field-name='Name' field-level-help="敬称は入力不要"></lightning-input-field>
+            <lightning-input-field field-name='Email' onchange={handleEmailChange}></lightning-input-field>
+            <lightning-input-field field-name='Alias' ></lightning-input-field>
+            <lightning-input-field field-name='ProfileId' ></lightning-input-field>
+            <lightning-input-field field-name='EmailEncodingKey' value="ISO-2022-JP" disabled></lightning-input-field>            
+            <lightning-input-field field-name='LanguageLocaleKey' disabled value="ja"></lightning-input-field>
+            <lightning-input-field field-name='LocaleSidKey' disabled value="ja_JP"></lightning-input-field>
+            <lightning-input-field field-name='TimeZoneSidKey' disabled value="Asia/Tokyo"></lightning-input-field>
             <div class="slds-m-top_medium">
-                <lightning-button variant="brand" type="submit" name="save" label="Create Account">
-                </lightning-button>
+                <center>
+                    <lightning-button variant="brand" type="submit" name="save" icon-name="utility:adduser" label="ユーザー登録">
+                    </lightning-button>
+                </center>
            </div>
        </div>
     </lightning-record-edit-form>
