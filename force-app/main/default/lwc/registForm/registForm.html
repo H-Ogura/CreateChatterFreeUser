@@ -4,9 +4,9 @@
         <div class="slds-box slds-m-around_medium">
             <lightning-input-field field-name='Id' value={userId}></lightning-input-field>
             <lightning-input-field field-name='Username' value={username} disabled></lightning-input-field>
-            <lightning-input-field field-name='Name' field-level-help="敬称は入力不要"></lightning-input-field>
+            <lightning-input-field field-name='Name'></lightning-input-field>
             <lightning-input-field field-name='Email' onchange={handleEmailChange}></lightning-input-field>
-            <lightning-input-field field-name='Alias' ></lightning-input-field>
+            <lightning-input-field field-name='Alias' value={ailas}></lightning-input-field>
             <lightning-input-field field-name='ProfileId' ></lightning-input-field>
             <lightning-input-field field-name='EmailEncodingKey' value="ISO-2022-JP" disabled></lightning-input-field>            
             <lightning-input-field field-name='LanguageLocaleKey' disabled value="ja"></lightning-input-field>
