@@ -1,36 +1,87 @@
 import { LightningElement, track, wire } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import chatterProfileId from '@salesforce/apex/registFormController.chatterProfileId';
+import { createRecord } from 'lightning/uiRecordApi';
+import USER_OBJECT from '@salesforce/schema/User';
+import COMMUNITYNICKNAME_FIELD from '@salesforce/schema/User.CommunityNickname';
+import FIRSTNAME_FIELD from '@salesforce/schema/User.FirstName';
+import LASTNAME_FIELD from '@salesforce/schema/User.LastName';
+import USERNAME_FIELD from '@salesforce/schema/User.Username';
+import EMAIL_FIELD from '@salesforce/schema/User.Email';
+import ALIAS_FIELD from '@salesforce/schema/User.Alias';
+import PROFILEID_FIELD from '@salesforce/schema/User.ProfileId';
+import LOCALESIDKEY_FIELD from '@salesforce/schema/User.LocaleSidKey';
+import TIMEZONESIDKEY_FIELD from '@salesforce/schema/User.TimeZoneSidKey';
+import LANGUAGELOCALEKEY_FIELD from '@salesforce/schema/User.LanguageLocaleKey';
+import EMAILENCODINGKEY_FIELD from '@salesforce/schema/User.EmailEncodingKey';
 
 export default class RegistForm extends LightningElement {
     @track userId;
     @track username;
-    @track ailas;
+    @track alias;
     @track canreset = false;
-    @track chatterid;
-
+    
+    chatterid = '';
+    name = '';
+    lastname = '';
+    firstname = '';
+    email = '';
+    
     @wire(chatterProfileId)
-    getchatterId(data){
-        this.chatterid = data;
-    } 
+    wiregetProfileid({data}){
+        this.chatterid = JSON.stringify(data);
+    }
 
-    handleSuccess(event) {
-        this.userId = event.detail.id;
-        this.canreset = true;
+    handleLastNameChange(event) {
+        this.lastname = event.target.value;
+    }
+    handlefirstNameChange(event) {
+        this.firstname = event.target.value;
     }
 
     handleEmailChange(event){
+        this.email = event.detail.value;
         let username = event.detail.value.split('@');
-        this.ailas = username[0];
+        this.alias = username[0];
         this.username = username[0] + '@sf.fsi.co.jp';
     }
 
+    saveUser() {
+        const fields = {};
+        let profileid = String(this.chatterid).replace(/"/g, '');
+
+        fields[FIRSTNAME_FIELD.fieldApiName] = this.firstname;
+        fields[LASTNAME_FIELD.fieldApiName] = this.lastname;
+        fields[USERNAME_FIELD.fieldApiName] = this.username;
+        fields[COMMUNITYNICKNAME_FIELD.fieldApiName] = this.alias + Date.now();
+        fields[EMAIL_FIELD.fieldApiName] = this.email;
+        fields[ALIAS_FIELD.fieldApiName] = this.alias;
+        fields[PROFILEID_FIELD.fieldApiName] = profileid;
+        fields[LOCALESIDKEY_FIELD.fieldApiName] = 'ja_JP';
+        fields[TIMEZONESIDKEY_FIELD.fieldApiName] = 'Asia/Tokyo';
+        fields[LANGUAGELOCALEKEY_FIELD.fieldApiName] = 'ja';
+        fields[EMAILENCODINGKEY_FIELD.fieldApiName] = 'ISO-2022-JP';
+
+        const recordInput = { apiName: USER_OBJECT.objectApiName, fields };
+        createRecord(recordInput)
+            .then(User => {
+                this.canreset = true;
+            })
+            .catch(error => {
+                alert('エラー：' + JSON.stringify(error.body.message));
+                /*
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'レコード作成エラー',
+                        message: JSON.stringify(error.body.message),
+                        variant: 'error',
+                    }),
+                );
+                */
+            });
+    }
+
     navigateToWebPage() {
-        this[NavigationMixin.Navigate]({
-            "type": "standard__webPage",
-            "attributes": {
-                "url": "https://login.salesforce.com/secur/forgotpassword.jsp?locale=jp&un=" + this.username
-            }
-        });
+        window.open("https://login.salesforce.com/secur/forgotpassword.jsp?locale=jp&un=" + this.username);       
     }
 }
