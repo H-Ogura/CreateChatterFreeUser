@@ -20,7 +20,7 @@ export default class RegistForm extends LightningElement {
     }
 
     handleEmailChange(event){
-        const username = event.detail.value.split('@');
+        let username = event.detail.value.split('@');
         this.ailas = username[0];
         this.username = username[0] + '@sf.fsi.co.jp';
     }

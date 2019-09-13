@@ -99,4 +99,5 @@ TestsResultsCache.xml
 # Ignore all local history of files
 
 # End of https://www.gitignore.io/api/salesforcedx,visualstudiocode
-.force-app/main/default/profiles/*
+force-app/main/default/profiles
+mdapioutput
