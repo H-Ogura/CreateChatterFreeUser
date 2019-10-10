@@ -68,8 +68,7 @@ export default class RegistForm extends LightningElement {
                 this.canreset = true;
             })
             .catch(error => {
-                alert('エラー：' + JSON.stringify(error.body.message));
-                /*
+                // alert('エラー：' + JSON.stringify(error.body.message));
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'レコード作成エラー',
@@ -77,7 +76,6 @@ export default class RegistForm extends LightningElement {
                         variant: 'error',
                     }),
                 );
-                */
             });
     }
 
