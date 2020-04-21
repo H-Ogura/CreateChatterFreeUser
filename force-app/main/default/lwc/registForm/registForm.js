@@ -1,6 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import chatterProfileId from '@salesforce/apex/registFormController.chatterProfileId';
+import IsAreadyExist from '@salesforce/apex/registFormController.IsAreadyExist';
 import { createRecord } from 'lightning/uiRecordApi';
 import USER_OBJECT from '@salesforce/schema/User';
 import COMMUNITYNICKNAME_FIELD from '@salesforce/schema/User.CommunityNickname';
@@ -15,11 +16,13 @@ import TIMEZONESIDKEY_FIELD from '@salesforce/schema/User.TimeZoneSidKey';
 import LANGUAGELOCALEKEY_FIELD from '@salesforce/schema/User.LanguageLocaleKey';
 import EMAILENCODINGKEY_FIELD from '@salesforce/schema/User.EmailEncodingKey';
 
+const DELAY = 500;
 export default class RegistForm extends LightningElement {
     @track userId;
     @track username;
     @track alias;
     @track canreset = false;
+    @track isExistUser = false;
     
     chatterid = '';
     name = '';
@@ -44,6 +47,21 @@ export default class RegistForm extends LightningElement {
         let username = event.detail.value.split('@');
         this.alias = username[0];
         this.username = username[0] + '@sf.fsi.co.jp';
+        window.clearTimeout(this.delayTimeout);
+        this.delayTimeout = setTimeout(() => {
+            IsAreadyExist({ 'email': this.email})
+                .then(result => {
+                    if( result !== 0){
+                        console.log(result);
+                        this.isExistUser = true;
+                    } else {
+                        this.isExistUser = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }, DELAY);
     }
 
     saveUser() {
