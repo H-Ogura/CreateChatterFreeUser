@@ -28,6 +28,9 @@
                 onchange={handleEmailChange}
                 class="slds-m-bottom_x-small"
             ></lightning-input>
+            <template if:true={isExistUser}>
+                <p><font color="red"><lightning-formatted-text value="このメールアドレスは既に登録されているので、登録できません。" ></lightning-formatted-text></font></p>
+            </template>
             <lightning-input
                 label="ユーザー名"
                 disabled
