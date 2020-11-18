@@ -1,3 +1,13 @@
+/**
+ * @description       : 
+ * @author            : Hiroyuki Ogura
+ * @group             : 
+ * @last modified on  : 2020-11-18
+ * @last modified by  : Hiroyuki Ogura
+ * Modifications Log 
+ * Ver   Date         Author           Modification
+ * 1.0   2020-11-18   Hiroyuki Ogura   Initial Version
+**/
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import chatterProfileId from '@salesforce/apex/registFormController.chatterProfileId';
@@ -43,10 +53,9 @@ export default class RegistForm extends LightningElement {
     }
 
     handleEmailChange(event){
-        this.email = event.detail.value;
-        let username = event.detail.value.split('@');
-        this.alias = username[0];
-        this.username = username[0] + '@sf.fsi.co.jp';
+        this.email = event.detail.value + '@fsi.co.jp';
+        this.alias = this.email;
+        this.username = event.detail.value + '@sf.fsi.co.jp';
         window.clearTimeout(this.delayTimeout);
         this.delayTimeout = setTimeout(() => {
             IsAreadyExist({ 'email': this.email})
@@ -73,12 +82,14 @@ export default class RegistForm extends LightningElement {
         fields[USERNAME_FIELD.fieldApiName] = this.username;
         fields[COMMUNITYNICKNAME_FIELD.fieldApiName] = this.alias + Date.now();
         fields[EMAIL_FIELD.fieldApiName] = this.email;
-        fields[ALIAS_FIELD.fieldApiName] = this.alias;
+        fields[ALIAS_FIELD.fieldApiName] = this.firstname;;
         fields[PROFILEID_FIELD.fieldApiName] = profileid;
         fields[LOCALESIDKEY_FIELD.fieldApiName] = 'ja_JP';
         fields[TIMEZONESIDKEY_FIELD.fieldApiName] = 'Asia/Tokyo';
         fields[LANGUAGELOCALEKEY_FIELD.fieldApiName] = 'ja';
         fields[EMAILENCODINGKEY_FIELD.fieldApiName] = 'ISO-2022-JP';
+
+        //console.log(fields);
 
         const recordInput = { apiName: USER_OBJECT.objectApiName, fields };
         createRecord(recordInput)
