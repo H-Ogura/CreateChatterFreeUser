@@ -21,9 +21,10 @@
                     ></lightning-input>
                 </div>
             </div>
-            <lightning-input type="email"
-                label="メールアドレス"
-                placeholder="sample@fsi.co.jp"
+            <lightning-input type="text"
+                label="アカウント名"
+                placeholder="sample"
+                field-level-help="メールアドレスの @ より前を入力してください"
                 required
                 onchange={handleEmailChange}
                 class="slds-var-m-bottom_x-small"

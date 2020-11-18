@@ -1,11 +1,20 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "CreateChatterFreeUser",
+            "versionName": "ver 1.0",
+            "versionNumber": "1.0.2.NEXT"
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "46.0",
+    "packageAliases": {
+        "CreateChatterFreeUser": "0Ho10000000GmbHCAS",
+        "CreateChatterFreeUser@1.0.0-1": "04t10000000PWpwAAG",
+        "CreateChatterFreeUser@1.0.1-1": "04t10000000PWq1AAG",
+        "CreateChatterFreeUser@1.0.2-1": "04t10000000PWq6AAG"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "46.0"
 }
